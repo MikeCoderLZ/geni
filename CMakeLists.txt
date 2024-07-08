@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 3.27.6)
 
-project(Geni)
+set(CMAKE_CXX_STANDARD 17)
+
+project(
+    Geni
+    VERSION 0.0.0
+    DESCRIPTION "Something like a game or real-time graphics engine."
+    LANGUAGES CXX
+    )
 
 cmake_path( APPEND PROJECT_SOURCE_DIR "cmake" OUTPUT_VARIABLE Geni_LOCAL_MODULE_PATH )
 cmake_path( APPEND PROJECT_SOURCE_DIR "depend" OUTPUT_VARIABLE Geni_LOCAL_DEPEND_PATH )
