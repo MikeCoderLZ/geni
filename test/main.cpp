@@ -1,3 +1,7 @@
-#include "CppUTest/Utest.h"
+#include "CppUTest/TestHarness.h"
+#include "CppUTest/CommandLineTestRunner.h"
 
-int main( int argc, const char** argv ) { return 0; }
+int main( int argc, const char** argv )
+{
+    return RUN_ALL_TESTS(argc, argv);
+}
