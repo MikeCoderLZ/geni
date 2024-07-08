@@ -1,4 +1,5 @@
-#include "CppUTest/Utest.h"
+#include "CppUTest/TestHarness.h"
+#include "CppUTest/CommandLineTestRunner.h"
 
 #include "math/vector.hpp"
 
