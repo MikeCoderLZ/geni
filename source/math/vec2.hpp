@@ -8,14 +8,29 @@ namespace geni::math {
 
     public:
     
-        Vec2() : x(0.0f), y(0.0f) {}
+        Vec2() : x{0.0f}, y{0.0f} {}
     
         Vec2(Scalar a, Scalar b)
-          : x(a), y(b) {}
+          : x{a}, y{b} {}
+
+        Vec2( Vec2 const& a )
+          : x{a.x}, y{a.y} {}
+
+        Vec2( Vec2&& a )
+          : x{a.x}, y{a.y} {}
+
+        auto operator =( Vec2 const& a ) -> Vec2&
+        {
+            x = a.x; y = a.y;
+            return *this;
+        }
 
         Scalar& operator [] (const int index)       { return ary[index]; }
         Scalar  operator [] (const int index) const { return ary[index]; }
         
+        bool operator ==( Vec2 const& a ) { return x == a.x and y == a.y; }
+        bool operator !=( Vec2 const& a ) { return x != a.x or y != a.y; }
+
         Vec2 operator + ( Vec2 const& b ) const { return Vec2( x + b.x, y + b.y ); }
         Vec2 operator - ( Vec2 const& b ) const { return Vec2( x - b.x, y - b.y ); }
         Vec2 operator * ( Vec2 const& b ) const { return Vec2( x * b.x, y * b.y ); }
