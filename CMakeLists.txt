@@ -18,3 +18,6 @@ Subprojects(
     CONFIG_DIRECTORY ${Geni_LOCAL_CONFIG_PATH}
     cpputest
 )
+
+add_executable( test-compile test/main.cpp )
+target_link_libraries( test-compile cpputest-static )
