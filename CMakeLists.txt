@@ -29,7 +29,9 @@ Subprojects(
 add_executable( test-compile test/main.cpp )
 target_include_directories( test-compile PRIVATE source )
 target_link_libraries( test-compile cpputest-static )
+target_link_libraries( test-compile cpputest-ext-static )
 
 add_executable( test-math test/math/test.cpp )
 target_include_directories( test-math PRIVATE source )
 target_link_libraries( test-math cpputest-static )
+target_link_libraries( test-math cpputest-ext-static )
