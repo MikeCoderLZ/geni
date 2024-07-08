@@ -6,7 +6,7 @@ set(
 SubprojectConfigTemplate
 "include(ExternalProject)\n\
 \n\
-function( Subproject_Init_@SUBPROJECT_NAME@ )\n\
+function( Subproject_Init_@SUBPROJECT_NAME@ prefix )\n\
     list(APPEND CMAKE_MESSAGE_INDENT \"  \")\n\    
     message( STATUS \"Configuring subproject @SUBPROJECT_NAME@\" )\n\
     ExternalProject_Add(\n\
@@ -19,6 +19,10 @@ function( Subproject_Init_@SUBPROJECT_NAME@ )\n\
         TEST_COMMAND \"\"\n\
         INSTALL_COMMAND \"\"\n\
     )\n\
+    ExternalProject_Get_Property(@SUBPROJECT_NAME@ INSTALL_DIR)\n\
+    find_path( CPPUTEST_INCLUDE_DIR CppUTest/Utest.h HINTS \\\${INSTALL_DIR}/include NO_CACHE)\n\
+    message( STATUS \"install directory: ${INSTALL_DIR}\")\n\
+    message( STATUS \"Test val: ${CPPUTEST_INCLUDE_DIR}\")\n\
     message( AUTHOR_WARNING \"Configuration of @SUBPROJECT_NAME@ failed. Configuration implementation has been stubbed out at: @SUBPROJECT_CONFIG_PATH@. You must complete the implementation of this automatically generated configuration file.\")
     list(POP_BACK CMAKE_MESSAGE_INDENT)\n\
 endfunction()"
@@ -107,15 +111,17 @@ function( Subprojects )
         set( foundProject FALSE )
         foreach( path ${CMAKE_MODULE_PATH} )
             cmake_path( APPEND path ${projectFile} )
-            if( EXISTS path )
+            if( EXISTS ${path} )
+                message( STATUS "Project config found." )
                 set( foundProject TRUE )
                 include( ${path} )
-                cmake_language( CALL "Subproject_Init_${project}" )
+                cmake_language( CALL "Subproject_Init_${project}" prefix )
                 break()
             endif()
         endforeach()
 
         if( NOT foundProject )
+        message( STATUS "Project config not found." )
             set( projectConfig "Subproject_${project}.cmake" )
             set( projectConfigPath ${configDir} )
             cmake_path( APPEND projectConfigPath ${projectConfig} )
@@ -125,7 +131,7 @@ function( Subprojects )
             configure_file( ${projectConfigTmpPath} ${projectConfigPath} )
             file( REMOVE ${projectConfigTmpPath} )
             include( ${projectConfigPath} )
-            cmake_language( CALL "Subproject_Init_${project}" )
+            cmake_language( CALL "Subproject_Init_${project}" prefix )
         endif()
     endforeach()
 
