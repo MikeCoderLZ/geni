@@ -31,10 +31,10 @@ namespace geni::math {
         bool operator ==( Vec2 const& a ) { return x == a.x and y == a.y; }
         bool operator !=( Vec2 const& a ) { return x != a.x or y != a.y; }
 
-        Vec2 operator + ( Vec2 const& b ) const { return Vec2( x + b.x, y + b.y ); }
-        Vec2 operator - ( Vec2 const& b ) const { return Vec2( x - b.x, y - b.y ); }
-        Vec2 operator * ( Vec2 const& b ) const { return Vec2( x * b.x, y * b.y ); }
-        Vec2 operator / ( Vec2 const& b ) const { return Vec2( x / b.x, y / b.y ); }
+        Vec2 operator + ( Vec2 const& b ) const { return { x + b.x, y + b.y }; }
+        Vec2 operator - ( Vec2 const& b ) const { return { x - b.x, y - b.y }; }
+        Vec2 operator * ( Vec2 const& b ) const { return { x * b.x, y * b.y }; }
+        Vec2 operator / ( Vec2 const& b ) const { return { x / b.x, y / b.y }; }
         
         operator Scalar*()
         { return ary; }
@@ -61,9 +61,15 @@ namespace geni::math {
     
     inline Vec2 operator+ ( Scalar s, Vec2 const& a )
     { return Vec2( s + a.x, s + a.y ); }
+
+    inline Vec2 operator+ ( Vec2 const& a, Scalar s )
+    { return Vec2( s + a.x, s + a.y ); }
+    
+    inline Vec2 operator- ( Scalar s, Vec2 const& a )
+    { return Vec2( s - a.x, s - a.y ); }
     
     inline Vec2 operator- ( Vec2 const& a, Scalar s )
-    { return Vec2( s - a.x, s - a.y ); }
+    { return Vec2( a.x - s, a.y - s ); }
     
     inline Vec2 operator* ( Scalar s, Vec2 const& a )
     { return Vec2( s * a.x, s * a.y ); }
@@ -75,13 +81,19 @@ namespace geni::math {
     { return Vec2( s / a.x, s / a.y ); }
     
     inline Vec2 operator/ ( Vec2 const& a, Scalar s )
-    { return Vec2( s / a.x, s / a.y ); }
+    { return Vec2( a.x / s, a.y / s ); }
     
     inline Vec2 mean( Vec2 const& a, Vec2 const& b )
     { return (a + b) * 0.5f; }
 
     inline Vec2 norm( Vec2 const& a )
-    { return a * invSqrt( a.x * a.x + a.y * a.y ); }
+    {
+        Scalar m{sqrt( a.x * a.x + a.y * a.y )};
+        if( m == 0.0f ) {
+            return a;
+        }
+        return 1.0f / m * a;
+    }
     
     inline Scalar dot( Vec2 const& a, Vec2 const& b )
     { return a.x * b.x + a.y * b.y; }
