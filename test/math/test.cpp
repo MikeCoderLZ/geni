@@ -2,6 +2,7 @@
 #include "CppUTest/CommandLineTestRunner.h"
 
 #include "math/vector.hpp"
+#include "math/stringify.hpp"
 
 using namespace geni::math;
 
@@ -23,23 +24,23 @@ TEST_GROUP( Vec2Tests ) {
 
 TEST( Vec2Tests, Construction )
 {
-    CHECK( a.x == 0.0f );
-    CHECK( a.y == 0.0f );
-    CHECK( b.x == 1.0f );
-    CHECK( b.y == 2.0f );
+    CHECK_EQUAL( 0.0f , a.x);
+    CHECK_EQUAL( 0.0f , a.y);
+    CHECK_EQUAL( 1.0f , b.x);
+    CHECK_EQUAL( 2.0f , b.y);
 }
 
 TEST( Vec2Tests, Subscript )
 {
-    CHECK( a[0] == 0.0f );
-    CHECK( a[1] == 0.0f );
-    CHECK( b[0] == 1.0f );
-    CHECK( b[1] == 2.0f );
+    CHECK_EQUAL( 0.0f , a[0] );
+    CHECK_EQUAL( 0.0f , a[1] );
+    CHECK_EQUAL( 1.0f , b[0] );
+    CHECK_EQUAL( 2.0f , b[1] );
 
-    CHECK( c[0] == 0.0f );
-    CHECK( c[1] == 0.0f );
-    CHECK( d[0] == 1.0f );
-    CHECK( d[1] == 2.0f );
+    CHECK_EQUAL( 0.0f , c[0] );
+    CHECK_EQUAL( 0.0f , c[1] );
+    CHECK_EQUAL( 1.0f , d[0] );
+    CHECK_EQUAL( 2.0f , d[1] );
 }
 
 TEST( Vec2Tests, Equality )
@@ -48,31 +49,31 @@ TEST( Vec2Tests, Equality )
     CHECK( a != b );
     a.x = 1.0f;
     a.y = 2.0f;
-    CHECK( a == b );
+    CHECK_EQUAL( b , a );
     CHECK_FALSE( a != b );
 }
 
 TEST( Vec2Tests, Addition )
 {
     a = a + b;
-    CHECK( a == b );
+    CHECK_EQUAL( b , a );
     CHECK_FALSE( a != b );
 }
 
 TEST( Vec2Tests, AdditionScalarVec )
 {
     a = b + 2.0f;
-    CHECK( a.x == 3.0f );
-    CHECK( a.y == 4.0f );
+    CHECK_EQUAL( 3.0f , a.x );
+    CHECK_EQUAL( 4.0f , a.y );
     a = 2.0f + b;
-    CHECK( a.x == 3.0f );
-    CHECK( a.y == 4.0f );
+    CHECK_EQUAL( 3.0f , a.x );
+    CHECK_EQUAL( 4.0f , a.y );
 }
 
 TEST( Vec2Tests, Subtraction )
 {
     a = b - a;
-    CHECK( a == b );
+    CHECK_EQUAL( b , a );
     CHECK_FALSE( a != b );
 }
 
@@ -80,82 +81,261 @@ TEST( Vec2Tests, Subtraction )
 TEST( Vec2Tests, SubtractionScalarVec )
 {
     a = b - 2.0f;
-    CHECK( a.x == -1.0f );
-    CHECK( a.y == 0.0f );
+    CHECK_EQUAL( -1.0f , a.x );
+    CHECK_EQUAL( 0.0f , a.y );
     a = 2.0f - b;
-    CHECK( a.x == 1.0f );
-    CHECK( a.y == 0.0f );
+    CHECK_EQUAL( 1.0f , a.x );
+    CHECK_EQUAL( 0.0f , a.y );
 }
 
 TEST( Vec2Tests, Multiplication )
 {
     a = e * b;
-    CHECK( a.x == 2.0f );
-    CHECK( a.y == 8.0f );
+    CHECK_EQUAL( 2.0f , a.x );
+    CHECK_EQUAL( 8.0f , a.y );
 }
 
 TEST( Vec2Tests, MultiplicationScalarVec )
 {
     a = b * 2.0f;
-    CHECK( a.x == 2.0f );
-    CHECK( a.y == 4.0f );
+    CHECK_EQUAL( 2.0f , a.x );
+    CHECK_EQUAL( 4.0f , a.y );
     a = 2.0f * b;
-    CHECK( a.x == 2.0f );
-    CHECK( a.y == 4.0f );
+    CHECK_EQUAL( 2.0f , a.x );
+    CHECK_EQUAL( 4.0f , a.y );
 }
 
 TEST( Vec2Tests, Division )
 {
     a = e / b;
-    CHECK( a.x == 2.0f );
-    CHECK( a.y == 2.0f );
+    CHECK_EQUAL( 2.0f , a.x );
+    CHECK_EQUAL( 2.0f , a.y );
 }
 
 TEST( Vec2Tests, DivisionScalarVec )
 {
     a = b / 2.0f;
-    CHECK( a.x == 1.0f / 2.0f );
-    CHECK( a.y == 2.0f / 2.0f );
+    CHECK_EQUAL( 1.0f / 2.0f , a.x );
+    CHECK_EQUAL( 2.0f / 2.0f , a.y );
     a = 2.0f / b;
-    CHECK( a.x == 2.0f );
-    CHECK( a.y == 1.0f );
+    CHECK_EQUAL( 2.0f , a.x );
+    CHECK_EQUAL( 1.0f , a.y );
 }
 
 TEST( Vec2Tests, Mean )
 {
     a = mean( a, b );
-    CHECK( a.x == 0.5f );
-    CHECK( a.y == 1.0f );
+    CHECK_EQUAL( 0.5f , a.x );
+    CHECK_EQUAL( 1.0f , a.y );
 }
 
 TEST( Vec2Tests, Norm )
 {
     a = norm( a );
-    CHECK( a.x == 0.0f );
-    CHECK( a.y == 0.0f );
+    CHECK_EQUAL( 0.0f , a.x );
+    CHECK_EQUAL( 0.0f , a.y );
     a = norm( f );
-    CHECK( a.x == 3.0f / 5.0f );
-    CHECK( a.y == 4.0f / 5.0f );
+    CHECK_EQUAL( 3.0f / 5.0f , a.x );
+    CHECK_EQUAL( 4.0f / 5.0f , a.y );
 }
 
 TEST( Vec2Tests, Dot )
 {
     Scalar proj = dot( a, a );
-    CHECK( proj == 0.0f );
+    CHECK_EQUAL( 0.0f , proj );
     proj = dot( a, b );
-    CHECK( proj == 0.0f );
+    CHECK_EQUAL( 0.0f , proj );
     proj = dot( b, e );
-    CHECK( proj == 10.0f );
+    CHECK_EQUAL( 10.0f , proj );
 }
 
 TEST( Vec2Tests, Cross )
 {
     Scalar doubleArea = cross( a, a );
-    CHECK( doubleArea == 0.0f );
+    CHECK_EQUAL( 0.0f , doubleArea );
     doubleArea = cross( b, e );
-    CHECK( doubleArea == 0.0f );
+    CHECK_EQUAL( 0.0f , doubleArea );
     doubleArea = cross( b, f );
-    CHECK( doubleArea == -2.0f );
+    CHECK_EQUAL( -2.0f , doubleArea );
+}
+
+TEST_GROUP( Vec3Tests ) {
+    Vec3 a;
+    Vec3 b;
+    Vec3 const c;
+    Vec3 const d{1.0f,2.0f,-3.0f};
+    Vec3 e;
+    Vec3 f;
+    void setup()
+    {
+        a.x = 0.0f; a.y = 0.0f; a.z = 0.0f;
+        b.x = 1.0f; b.y = 2.0f; b.z = -3.0f;
+        e.x = 2.0f; e.y = 4.0f; e.z = 8.0f;
+        /*
+        b x e => 16 - -12, -6 - 8, 4 - 4 => <28,-14, 0>
+        b := <1,2,-3>
+        f := <4,4,2>
+        b x f => 4 +12, -12 - 2, 4 - 8 => <16, -14, -4>
+        */
+        f.x = 4.0f; f.y = 4.0f; f.z = 2.0f;
+    }
+};
+
+TEST( Vec3Tests, Construction )
+{
+    CHECK_EQUAL( 0.0f , a.x );
+    CHECK_EQUAL( 0.0f , a.y );
+    CHECK_EQUAL( 0.0f , a.z );
+    CHECK_EQUAL( 1.0f , b.x );
+    CHECK_EQUAL( 2.0f , b.y );
+    CHECK_EQUAL( -3.0f , b.z );
+}
+
+TEST( Vec3Tests, Subscript )
+{
+    CHECK_EQUAL( 0.0f , a[0] );
+    CHECK_EQUAL( 0.0f , a[1] );
+    CHECK_EQUAL( 0.0f , a[2] );
+    CHECK_EQUAL( 1.0f , b[0] );
+    CHECK_EQUAL( 2.0f , b[1] );
+    CHECK_EQUAL( -3.0f , b[2] );
+
+    CHECK_EQUAL( 0.0f , c[0] );
+    CHECK_EQUAL( 0.0f , c[1] );
+    CHECK_EQUAL( 0.0f , c[2] );
+    CHECK_EQUAL( 1.0f , d[0] );
+    CHECK_EQUAL( 2.0f , d[1] );
+    CHECK_EQUAL( -3.0f , d[2] );
+}
+
+TEST( Vec3Tests, Equality )
+{
+    CHECK_FALSE( a == b );
+    CHECK( a != b );
+    a.x = 1.0f;
+    a.y = 2.0f;
+    a.z = -3.0f;
+    CHECK_EQUAL( b , a );
+    CHECK_FALSE( a != b );
+}
+
+TEST( Vec3Tests, Addition )
+{
+    a = a + b;
+    CHECK_EQUAL( b , a );
+    CHECK_FALSE( a != b );
+}
+
+TEST( Vec3Tests, AdditionScalarVec )
+{
+    a = b + 2.0f;
+    CHECK_EQUAL( 3.0f , a.x );
+    CHECK_EQUAL( 4.0f , a.y );
+    CHECK_EQUAL( -1.0f , a.z );
+    a = 2.0f + b;
+    CHECK_EQUAL( 3.0f , a.x );
+    CHECK_EQUAL( 4.0f , a.y );
+    CHECK_EQUAL( -1.0f , a.z );
+}
+
+TEST( Vec3Tests, Subtraction )
+{
+    a = b - a;
+    CHECK_EQUAL( b , a );
+    CHECK_FALSE( a != b );
+}
+
+
+TEST( Vec3Tests, SubtractionScalarVec )
+{
+    a = b - 2.0f;
+    CHECK_EQUAL( -1.0f , a.x );
+    CHECK_EQUAL( 0.0f , a.y );
+    CHECK_EQUAL( -5.0f , a.z );
+    a = 2.0f - b;
+    CHECK_EQUAL( 1.0f , a.x );
+    CHECK_EQUAL( 0.0f , a.y );
+    CHECK_EQUAL( 5.0f , a.z );
+}
+
+TEST( Vec3Tests, Multiplication )
+{
+    a = e * b;
+    CHECK_EQUAL( 2.0f , a.x );
+    CHECK_EQUAL( 8.0f , a.y );
+    CHECK_EQUAL( -24.0f , a.z );
+}
+
+TEST( Vec3Tests, MultiplicationScalarVec )
+{
+    a = b * 2.0f;
+    CHECK_EQUAL( 2.0f , a.x );
+    CHECK_EQUAL( 4.0f , a.y );
+    CHECK_EQUAL( -6.0f , a.z );
+    a = 2.0f * b;
+    CHECK_EQUAL( 2.0f , a.x );
+    CHECK_EQUAL( 4.0f , a.y );
+    CHECK_EQUAL( -6.0f , a.z );
+}
+
+TEST( Vec3Tests, Division )
+{
+    a = e / b;
+    CHECK_EQUAL( 2.0f , a.x );
+    CHECK_EQUAL( 2.0f , a.y );
+    CHECK_EQUAL( 8.0f / -3.0f , a.z );
+}
+
+TEST( Vec3Tests, DivisionScalarVec )
+{
+    a = b / 2.0f;
+    CHECK_EQUAL( 1.0f / 2.0f , a.x );
+    CHECK_EQUAL( 2.0f / 2.0f , a.y );
+    CHECK_EQUAL( -3.0f / 2.0f , a.z );
+    a = 2.0f / b;
+    CHECK_EQUAL( 2.0f , a.x );
+    CHECK_EQUAL( 1.0f , a.y );
+    CHECK_EQUAL( 2.0f / -3.0f , a.z );
+}
+
+TEST( Vec3Tests, Mean )
+{
+    a = mean( a, b );
+    CHECK_EQUAL( 0.5f , a.x );
+    CHECK_EQUAL( 1.0f , a.y );
+    CHECK_EQUAL( -1.5f , a.z );
+}
+
+TEST( Vec3Tests, Norm )
+{
+    a = norm( a );
+    CHECK_EQUAL( 0.0f , a.x );
+    CHECK_EQUAL( 0.0f , a.y );
+    CHECK_EQUAL( 0.0f , a.z );
+    a = norm( f );
+    CHECK_EQUAL( 4.0f / 6.0f , a.x );
+    CHECK_EQUAL( 4.0f / 6.0f , a.y );
+    CHECK_EQUAL( 2.0f / 6.0f , a.z );
+}
+
+TEST( Vec3Tests, Dot )
+{
+    Scalar proj = dot( a, a );
+    CHECK_EQUAL( 0.0f , proj );
+    proj = dot( a, b );
+    CHECK_EQUAL( 0.0f , proj );
+    proj = dot( b, e );
+    CHECK_EQUAL( -14.0f , proj );
+}
+
+TEST( Vec3Tests, Cross )
+{
+    Vec3 ortho = cross( a, a );
+    CHECK_EQUAL( a , ortho);
+    ortho = cross( b, e );
+    CHECK_EQUAL( Vec3(28.0f, -14.0f, 0.0f), ortho );
+    ortho = cross( b, f );
+    CHECK_EQUAL( Vec3(16.0f, -14.0f, -4.0f), ortho );
 }
 
 int main( int argc, const char** argv )
