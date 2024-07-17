@@ -106,7 +106,7 @@ namespace geni::math {
     
     inline Vec3 norm( Vec3 const& a )
     {
-              Scalar m{sqrt( a.x * a.x + a.y * a.y + a.z * a.z )};
+        Scalar m{sqrt( a.x * a.x + a.y * a.y + a.z * a.z )};
         if( m == 0.0f ) {
             return a;
         }
