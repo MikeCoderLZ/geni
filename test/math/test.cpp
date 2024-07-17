@@ -309,14 +309,8 @@ TEST_GROUP( Vec4Tests ) {
 
 TEST( Vec4Tests, Construction )
 {
-    CHECK_EQUAL( 0.0f , a.x );
-    CHECK_EQUAL( 0.0f , a.y );
-    CHECK_EQUAL( 0.0f , a.z );
-    CHECK_EQUAL( 0.0f , a.w );
-    CHECK_EQUAL( 1.0f , b.x );
-    CHECK_EQUAL( 2.0f , b.y );
-    CHECK_EQUAL( -3.0f , b.z );
-    CHECK_EQUAL( -5.0f , b.w );
+    CHECK_EQUAL( Vec4() , a );
+    CHECK_EQUAL( Vec4(1.0f,2.0f,-3.0f,-5.0f), b );
 }
 
 TEST( Vec4Tests, Subscript )
@@ -365,15 +359,9 @@ TEST( Vec4Tests, Addition )
 TEST( Vec4Tests, AdditionScalarVec )
 {
     a = b + 2.0f;
-    CHECK_EQUAL( 3.0f , a.x );
-    CHECK_EQUAL( 4.0f , a.y );
-    CHECK_EQUAL( -1.0f , a.z );
-    CHECK_EQUAL( -3.0f , a.w );
+    CHECK_EQUAL( Vec4(3.0f,4.0f,-1.0f,-3.0f), a );
     a = 2.0f + b;
-    CHECK_EQUAL( 3.0f , a.x );
-    CHECK_EQUAL( 4.0f , a.y );
-    CHECK_EQUAL( -1.0f , a.z );
-    CHECK_EQUAL( -3.0f , a.w );
+    CHECK_EQUAL( Vec4(3.0f,4.0f,-1.0f,-3.0f), a );
 }
 
 TEST( Vec4Tests, Subtraction )
@@ -389,15 +377,9 @@ TEST( Vec4Tests, Subtraction )
 TEST( Vec4Tests, SubtractionScalarVec )
 {
     a = b - 2.0f;
-    CHECK_EQUAL( -1.0f , a.x );
-    CHECK_EQUAL( 0.0f , a.y );
-    CHECK_EQUAL( -5.0f , a.z );
-    CHECK_EQUAL( -7.0f , a.w );
+    CHECK_EQUAL( Vec4(-1.0f,0.0f,-5.0f,-7.0f), a );
     a = 2.0f - b;
-    CHECK_EQUAL( 1.0f , a.x );
-    CHECK_EQUAL( 0.0f , a.y );
-    CHECK_EQUAL( 5.0f , a.z );
-    CHECK_EQUAL( 7.0f , a.w );
+    CHECK_EQUAL( Vec4(1.0f,0.0f,5.0f,7.0f), a );
 }
 
 TEST( Vec4Tests, Multiplication )
