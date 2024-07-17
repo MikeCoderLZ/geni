@@ -45,12 +45,10 @@ TEST( Vec2Tests, Subscript )
 
 TEST( Vec2Tests, Equality )
 {
-    CHECK_FALSE( a == b );
-    CHECK( a != b );
+    CHECK_COMPARE( a, !=, b );
     a.x = 1.0f;
     a.y = 2.0f;
     CHECK_EQUAL( b , a );
-    CHECK_FALSE( a != b );
 }
 
 TEST( Vec2Tests, Addition )
@@ -210,20 +208,21 @@ TEST( Vec3Tests, Subscript )
 
 TEST( Vec3Tests, Equality )
 {
-    CHECK_FALSE( a == b );
-    CHECK( a != b );
+    CHECK_COMPARE( a, !=, b );
     a.x = 1.0f;
     a.y = 2.0f;
     a.z = -3.0f;
-    CHECK_EQUAL( b , a );
-    CHECK_FALSE( a != b );
+    CHECK_EQUAL( b, a );
 }
 
 TEST( Vec3Tests, Addition )
 {
     a = a + b;
-    CHECK_EQUAL( b , a );
-    CHECK_FALSE( a != b );
+    CHECK_EQUAL( b, a );
+    a = b + e;
+    CHECK_EQUAL( Vec3(3.0f,6.0f,5.0f), a );
+    a = e + b;
+    CHECK_EQUAL( Vec3(3.0f,6.0f,5.0f), a );
 }
 
 TEST( Vec3Tests, AdditionScalarVec )
@@ -241,10 +240,13 @@ TEST( Vec3Tests, AdditionScalarVec )
 TEST( Vec3Tests, Subtraction )
 {
     a = b - a;
-    CHECK_EQUAL( b , a );
-    CHECK_FALSE( a != b );
-}
+    CHECK_EQUAL( b, a );
+    a = b - e;
+    CHECK_EQUAL( a, Vec3(-1.0f,-2.0f,-11.0f) );
+    a = e - b;
+    CHECK_EQUAL( a, Vec3(1.0f,2.0f,11.0f) );
 
+}
 
 TEST( Vec3Tests, SubtractionScalarVec )
 {
@@ -289,33 +291,23 @@ TEST( Vec3Tests, Division )
 TEST( Vec3Tests, DivisionScalarVec )
 {
     a = b / 2.0f;
-    CHECK_EQUAL( 1.0f / 2.0f , a.x );
-    CHECK_EQUAL( 2.0f / 2.0f , a.y );
-    CHECK_EQUAL( -3.0f / 2.0f , a.z );
+    CHECK_EQUAL( Vec3(1.0f / 2.0f,2.0f / 2.0f,-3.0f / 2.0f), a );
     a = 2.0f / b;
-    CHECK_EQUAL( 2.0f , a.x );
-    CHECK_EQUAL( 1.0f , a.y );
-    CHECK_EQUAL( 2.0f / -3.0f , a.z );
+    CHECK_EQUAL( Vec3(2.0f,1.0f,2.0f / -3.0f), a );
 }
 
 TEST( Vec3Tests, Mean )
 {
     a = mean( a, b );
-    CHECK_EQUAL( 0.5f , a.x );
-    CHECK_EQUAL( 1.0f , a.y );
-    CHECK_EQUAL( -1.5f , a.z );
+    CHECK_EQUAL( Vec3(0.5f,1.0f,-1.5f), a );
 }
 
 TEST( Vec3Tests, Norm )
 {
     a = norm( a );
-    CHECK_EQUAL( 0.0f , a.x );
-    CHECK_EQUAL( 0.0f , a.y );
-    CHECK_EQUAL( 0.0f , a.z );
+    CHECK_EQUAL( Vec3(), a );
     a = norm( f );
-    CHECK_EQUAL( 4.0f / 6.0f , a.x );
-    CHECK_EQUAL( 4.0f / 6.0f , a.y );
-    CHECK_EQUAL( 2.0f / 6.0f , a.z );
+    CHECK_EQUAL( Vec3(4.0f / 6.0f,4.0f / 6.0f,2.0f / 6.0f), a );
 }
 
 TEST( Vec3Tests, Dot )
