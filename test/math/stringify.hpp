@@ -32,3 +32,17 @@ SimpleString StringFrom( geni::math::Vec3 const& v )
             + StringFrom( v.z )
             + SimpleString(">");
 }
+
+inline
+SimpleString StringFrom( geni::math::Vec4 const& v )
+{
+    return SimpleString("<")
+            + StringFrom( v.x )
+            + SimpleString(", ")
+            + StringFrom( v.y )
+            + SimpleString(", ")
+            + StringFrom( v.z )
+            + SimpleString(", ")
+            + StringFrom( v.w )
+            + SimpleString(">");
+}
