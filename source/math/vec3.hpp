@@ -1,6 +1,7 @@
 #pragma once
 
 #include "math/scalar.hpp"
+#include "math/vec2.hpp"
 
 namespace geni::math {
 
