@@ -1,5 +1,4 @@
 #include "CppUTest/TestHarness.h"
-#include "CppUTest/CommandLineTestRunner.h"
 
 #include "math/vec3.hpp"
 #include "math/stringify.hpp"
