@@ -17,6 +17,10 @@ message( STATUS "local module path: ${Geni_LOCAL_MODULE_PATH}" )
 message( STATUS "local depend path: ${Geni_LOCAL_DEPEND_PATH}" )
 message( STATUS "local config path: ${Geni_LOCAL_CONFIG_PATH}" )
 
+option(BUILD_STATIC_LIBS "Build static libraries" ON)
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+option(BUILD_TESTS "Build tests" OFF)
+
 list( APPEND CMAKE_MODULE_PATH ${Geni_LOCAL_MODULE_PATH} )
 
 include( Subproject )
@@ -26,12 +30,17 @@ Subprojects(
     cpputest
 )
 
-add_executable( test-compile test/main.cpp )
-target_include_directories( test-compile PRIVATE source )
-target_link_libraries( test-compile cpputest-static )
-target_link_libraries( test-compile cpputest-ext-static )
+if( BUILD_TESTS )
 
 add_executable( test-math test/math/test.cpp test/math/test-vec2.cpp test/math/test-vec3.cpp  test/math/test-vec4.cpp )
 target_include_directories( test-math PRIVATE source test )
 target_link_libraries( test-math cpputest-static )
 target_link_libraries( test-math cpputest-ext-static )
+
+add_custom_target(
+    run-tests
+    COMMAND find ${Geni_BINARY_DIR} -d 1 -name \"test-*\" | xargs -I \{\} bash -c "\{\}"
+    DEPENDS test-math
+)
+
+endif()
