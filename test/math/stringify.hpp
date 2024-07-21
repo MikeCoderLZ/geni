@@ -3,7 +3,7 @@
 #include <string>
 
 #include "CppUTest/SimpleString.h"
-#include "math/vector.hpp"
+#include "math/math.hpp"
 
 inline
 SimpleString StringFrom( geni::math::Scalar const& s )
