@@ -88,6 +88,7 @@ namespace geni::math {
       { return { m(c,0), m(c,1), m(c,2), m(c,3) }; }
 
       auto operator *( Mat4x4 const& b ) -> Mat4x4;
+      auto operator *( Vec4 const& v ) -> Vec4;
 
     private:
 
@@ -158,5 +159,16 @@ namespace geni::math {
           m.e<0,3>() * b.m.e<3,0>() + m.e<1,3>() * b.m.e<3,1>() + m.e<2,3>() * b.m.e<3,2>() + m.e<3,3>() * b.m.e<3,3>()
         };
       }
+
+  inline
+  auto Mat4x4::operator *( Vec4 const& v ) -> Vec4
+  {
+    return {
+      m.e<0,0>() * v[0] + m.e<1,0>() * v[1] + m.e<2,0>() * v[2] + m.e<3,0>() * v[3],
+      m.e<0,1>() * v[0] + m.e<1,1>() * v[1] + m.e<2,1>() * v[2] + m.e<3,1>() * v[3],
+      m.e<0,2>() * v[0] + m.e<1,2>() * v[1] + m.e<2,2>() * v[2] + m.e<3,2>() * v[3],
+      m.e<0,3>() * v[0] + m.e<1,3>() * v[1] + m.e<2,3>() * v[2] + m.e<3,3>() * v[3]
+    };
+  }
 
 }

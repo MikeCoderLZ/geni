@@ -32,7 +32,15 @@ Subprojects(
 
 if( BUILD_TESTS )
 
-add_executable( test-math test/math/test.cpp test/math/test-vec2.cpp test/math/test-vec3.cpp test/math/test-vec4.cpp test/math/test-mat4x4.cpp )
+add_executable(
+    test-math
+    test/math/test.cpp
+    test/math/test-vec2.cpp
+    test/math/test-vec3.cpp
+    test/math/test-vec4.cpp
+    test/math/test-mat4x4.cpp
+    test/math/test-math.cpp
+)
 target_include_directories( test-math PRIVATE source test )
 target_link_libraries( test-math cpputest-static )
 target_link_libraries( test-math cpputest-ext-static )
