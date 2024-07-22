@@ -90,7 +90,9 @@ namespace geni::math {
       auto row(std::size_t r) const -> Vec4
       { return { m(0,r), m(1,r), m(2,r), m(3,r) }; }
 
+      auto operator -() -> Mat4x4;
       auto operator +( Mat4x4 const& n ) -> Mat4x4;
+      auto operator -( Mat4x4 const& n ) -> Mat4x4;
       auto operator *( Mat4x4 const& b ) -> Mat4x4;
       auto operator *( Vec4 const& v ) -> Vec4;
 
@@ -140,6 +142,17 @@ namespace geni::math {
   };
 
   inline
+  auto Mat4x4::operator -() -> Mat4x4
+  {
+    return {
+      -m.e<0,0>(), -m.e<0,1>(), -m.e<0,2>(), -m.e<0,3>(),
+      -m.e<1,0>(), -m.e<1,1>(), -m.e<1,2>(), -m.e<1,3>(),
+      -m.e<2,0>(), -m.e<2,1>(), -m.e<2,2>(), -m.e<2,3>(),
+      -m.e<3,0>(), -m.e<3,1>(), -m.e<3,2>(), -m.e<3,3>()
+    };
+  }
+
+  inline
   auto Mat4x4::operator +( Mat4x4 const& n ) -> Mat4x4
   {
     return {
@@ -147,6 +160,17 @@ namespace geni::math {
       m.e<1,0>() + n.m.e<1,0>(), m.e<1,1>() + n.m.e<1,1>(), m.e<1,2>() + n.m.e<1,2>(), m.e<1,3>() + n.m.e<1,3>(),
       m.e<2,0>() + n.m.e<2,0>(), m.e<2,1>() + n.m.e<2,1>(), m.e<2,2>() + n.m.e<2,2>(), m.e<2,3>() + n.m.e<2,3>(),
       m.e<3,0>() + n.m.e<3,0>(), m.e<3,1>() + n.m.e<3,1>(), m.e<3,2>() + n.m.e<3,2>(), m.e<3,3>() + n.m.e<3,3>()
+    };
+  }
+
+  inline
+  auto Mat4x4::operator -( Mat4x4 const& n ) -> Mat4x4
+  {
+    return {
+      m.e<0,0>() - n.m.e<0,0>(), m.e<0,1>() - n.m.e<0,1>(), m.e<0,2>() - n.m.e<0,2>(), m.e<0,3>() - n.m.e<0,3>(),
+      m.e<1,0>() - n.m.e<1,0>(), m.e<1,1>() - n.m.e<1,1>(), m.e<1,2>() - n.m.e<1,2>(), m.e<1,3>() - n.m.e<1,3>(),
+      m.e<2,0>() - n.m.e<2,0>(), m.e<2,1>() - n.m.e<2,1>(), m.e<2,2>() - n.m.e<2,2>(), m.e<2,3>() - n.m.e<2,3>(),
+      m.e<3,0>() - n.m.e<3,0>(), m.e<3,1>() - n.m.e<3,1>(), m.e<3,2>() - n.m.e<3,2>(), m.e<3,3>() - n.m.e<3,3>()
     };
   }
 

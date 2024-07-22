@@ -168,6 +168,23 @@ TEST( Mat4x4Tests, MatrixAddition )
     CHECK_EQUAL(e, c);
 }
 
+TEST( Mat4x4Tests, MatrixNegation )
+{
+    Mat4x4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
+    Mat4x4 c{ -m };
+    CHECK_EQUAL(Mat4x4( 1,5,-11,6, 6,5,12,10, -12,-10,-9,-17, 4,6,8,2 ), c);
+}
+
+TEST( Mat4x4Tests, MatrixSubtraction )
+{
+    // This happens to be commutative
+    Mat4x4 c{ m5-m6 };
+    Mat4x4 e{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
+    CHECK_EQUAL(e, c);
+    c = m6-m5;
+    CHECK_EQUAL(-e, c);
+}
+
 TEST( Mat4x4Tests, MatrixMultiplication_ZeroMatrix )
 {
     // This happens to be commutative
