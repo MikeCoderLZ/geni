@@ -55,6 +55,9 @@ namespace geni::math {
         operator Scalar*()
         { return ary; }
 
+        operator Scalar const*() const
+        { return ary; }
+
         struct {
             Scalar x,y,z;
         };
