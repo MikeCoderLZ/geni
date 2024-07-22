@@ -21,10 +21,12 @@ TEST_GROUP( Mat4x4Tests ) {
         mI = Mat4x4::identity();
         m3 = Mat4x4::fill(4.0f);
         m4 = Mat4x4::columns( Vec4(1.0f,2.0f,3.0f,4.0f) );
+
         m5 = Mat4x4::columns( Vec4(1.0f,2.0f,3.0f,4.0f),
                               Vec4(-1.0f,-2.0f,-3.0f,-4.0f),
                               Vec4(5.0f,6.0f,7.0f,8.0f),
                               Vec4(-5.0f,-6.0f,-7.0f,-8.0f) );
+
         m6 = Mat4x4::columns( Vec4(2.0f,7.0f,-8.0f,10.0f),
                               Vec4(5.0f,3.0f,9.0f,6.0f),
                               Vec4(-7.0f,-4.0f,-2.0f,-9.0f),
@@ -145,6 +147,25 @@ TEST( Mat4x4Tests, MultiColumnConstruction )
     CHECK_EQUAL( -6.0f, m5(3,1) );
     CHECK_EQUAL( -7.0f, m5(3,2) );
     CHECK_EQUAL( -8.0f, m5(3,3) );
+}
+
+TEST( Mat4x4Tests, MatrixAddition_ZeroMatrix )
+{
+    // This happens to be commutative
+    Mat4x4 c{ m5+m0 };
+    CHECK_EQUAL(m5, c);
+    c = m0+m5;
+    CHECK_EQUAL(m5, c);
+}
+
+TEST( Mat4x4Tests, MatrixAddition )
+{
+    // This happens to be commutative
+    Mat4x4 c{ m5+m6 };
+    Mat4x4 e{ 3.0f,9.0f,-5.0f,14.0f, 4.0f,1.0f,6.0f,2.0f, -2.0f,2.0f,5.0f,-1.0f, -6.0f,-6.0f,-6.0f,-14.0f };
+    CHECK_EQUAL(e, c);
+    c = m6+m5;
+    CHECK_EQUAL(e, c);
 }
 
 TEST( Mat4x4Tests, MatrixMultiplication_ZeroMatrix )
