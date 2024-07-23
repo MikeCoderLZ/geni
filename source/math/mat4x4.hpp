@@ -95,12 +95,13 @@ namespace geni::math {
       auto operator -( Mat4x4 const& n ) -> Mat4x4;
       auto operator *( Mat4x4 const& b ) -> Mat4x4;
       auto operator *( Scalar v ) -> Mat4x4;
+      auto operator /( Scalar v ) -> Mat4x4;
       auto operator *( Vec4 const& v ) -> Vec4;
 
     private:
 
       friend auto operator *( Vec4 const& v, Mat4x4 const& m ) -> Vec4;
-      friend auto operator *( Scalar s, Mat4x4 const& m ) -> Mat4x4
+      friend auto operator *( Scalar s, Mat4x4 const& m ) -> Mat4x4;
 
       class M {
         public:
@@ -184,6 +185,17 @@ namespace geni::math {
       m.e<1,0>() * s, m.e<1,1>() * s, m.e<1,2>() * s, m.e<1,3>() * s,
       m.e<2,0>() * s, m.e<2,1>() * s, m.e<2,2>() * s, m.e<2,3>() * s,
       m.e<3,0>() * s, m.e<3,1>() * s, m.e<3,2>() * s, m.e<3,3>() * s
+    };
+  }
+
+  inline
+  auto Mat4x4::operator /( Scalar s ) -> Mat4x4
+  {
+    return {
+      m.e<0,0>() / s, m.e<0,1>() / s, m.e<0,2>() / s, m.e<0,3>() / s,
+      m.e<1,0>() / s, m.e<1,1>() / s, m.e<1,2>() / s, m.e<1,3>() / s,
+      m.e<2,0>() / s, m.e<2,1>() / s, m.e<2,2>() / s, m.e<2,3>() / s,
+      m.e<3,0>() / s, m.e<3,1>() / s, m.e<3,2>() / s, m.e<3,3>() / s
     };
   }
 
