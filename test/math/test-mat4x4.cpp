@@ -232,3 +232,16 @@ TEST( Mat4x4Tests, MatrixMultiplication_NontrivialMatrices )
     CHECK_EQUAL(p, c);
 }
 
+TEST( Mat4x4Tests, Mat4x4Transpose )
+{
+    Mat4x4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
+    Mat4x4 c{ m.transpose() };
+    CHECK_EQUAL(Mat4x4( -1,-6,12,-4, -5,-5,10,-6, 11,-12,9,-8, -6,-10,17,-2 ), c);
+}
+
+TEST( Mat4x4Tests, Mat4x4Trace )
+{
+    Mat4x4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
+    Scalar c{ m.trace() };
+    CHECK_EQUAL(1, c);
+}

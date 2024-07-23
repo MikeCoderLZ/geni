@@ -98,6 +98,9 @@ namespace geni::math {
       auto operator /( Scalar v ) -> Mat4x4;
       auto operator *( Vec4 const& v ) -> Vec4;
 
+      auto transpose() -> Mat4x4;
+      auto trace() -> Scalar;
+
     private:
 
       friend auto operator *( Vec4 const& v, Mat4x4 const& m ) -> Vec4;
@@ -258,5 +261,20 @@ namespace geni::math {
       v[0] * m.m.e<3,0>() + v[1] * m.m.e<3,1>() + v[2] * m.m.e<3,2>() + v[3] * m.m.e<3,3>()
     };
   }
+
+  inline
+  auto Mat4x4::transpose() -> Mat4x4
+  {
+    return {
+      m.e<0,0>(), m.e<1,0>(), m.e<2,0>(), m.e<3,0>(),
+      m.e<0,1>(), m.e<1,1>(), m.e<2,1>(), m.e<3,1>(),
+      m.e<0,2>(), m.e<1,2>(), m.e<2,2>(), m.e<3,2>(),
+      m.e<0,3>(), m.e<1,3>(), m.e<2,3>(), m.e<3,3>()
+    };
+  }
+
+  inline
+  auto Mat4x4::trace() -> Scalar
+  { return m.e<0,0>() + m.e<1,1>() + m.e<2,2>() + m.e<3,3>(); }
 
 }
