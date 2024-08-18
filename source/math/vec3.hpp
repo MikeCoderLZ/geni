@@ -26,13 +26,7 @@ namespace geni::math {
         Vec3( Vec3&& a )
           : x{a.x}, y{a.y}, z{a.z} {}
           
-        auto operator =( Vec3 const& b ) -> Vec3&
-        {
-          x = b.x; y = b.y; z = b.z;
-          return *this;
-        }
-
-        auto operator =( Vec3&& b ) -> Vec3&
+        auto operator =( Vec3 b ) -> Vec3&
         {
           x = b.x; y = b.y; z = b.z;
           return *this;
