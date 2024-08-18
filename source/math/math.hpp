@@ -2,6 +2,7 @@
 
 #include "math/vector.hpp"
 #include "math/matrix.hpp"
+#include "math/qtn.hpp"
 
 #include <iostream>
 
@@ -22,6 +23,12 @@ namespace geni::math {
     inline
     auto operator <<( std::ostream& s, Vec4 const& v ) -> std::ostream& {
         s << "<" << v[0] << ", " << v[1] << ", " << v[2] << ", " << v[3] << ">";
+        return s;
+    }
+
+    inline
+    auto operator <<( std::ostream& s, Qtn const& v ) -> std::ostream& {
+        s << v.toString();
         return s;
     }
 

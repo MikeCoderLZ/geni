@@ -48,6 +48,12 @@ SimpleString StringFrom( geni::math::Vec4 const& v )
 }
 
 inline
+SimpleString StringFrom( geni::math::Qtn const& v )
+{
+    return v.toString().c_str();
+}
+
+inline
 SimpleString StringFrom( geni::math::Mat4x4 const& m )
 {
     return SimpleString("[<")
