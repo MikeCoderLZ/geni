@@ -39,7 +39,7 @@ namespace geni::math {
       { return {(Scalar const*)a,(Scalar const*)b,(Scalar const*)c,(Scalar const*)d}; }
       static
       Mat4x4 columns( Vec4 const& a )
-      { return {(Scalar const*)a,(Scalar const*)a,(Scalar const*)a,(Scalar const*)a,}; }
+      { return {(Scalar const*)a,(Scalar const*)a,(Scalar const*)a,(Scalar const*)a}; }
       static
       Mat4x4 rows( Vec4 const& a, Vec4 const& b, Vec4 const& c, Vec4 const& d )
       {
