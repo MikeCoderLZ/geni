@@ -34,6 +34,7 @@ if( BUILD_TESTS )
 
 add_executable(
     test-math
+    source/math/envoy.cpp
     test/math/test.cpp
     test/math/test-vec2.cpp
     test/math/test-vec3.cpp

@@ -82,10 +82,10 @@ TEST( QtnTests, DivisionScalarVec )
 
 TEST( QtnTests, Normalize )
 {
-    a.normalize();
+    a = norm(a);
     CHECK_EQUAL( Qtn(), a );
-    c.normalize();
+    c = norm(c);
     CHECK_EQUAL( c, c );
-    g.normalize();
+    g = norm(g);
     CHECK_EQUAL( Qtn(0.8f,0.4f,0.4f,0.2f), g );
 }

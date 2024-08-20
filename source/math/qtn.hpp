@@ -5,8 +5,11 @@
 #include "math/scalar.hpp"
 #include "math/vec3.hpp"
 #include "math/angle.hpp"
+#include "math/envoy.hpp"
 
 namespace geni::math {
+
+  class Mat4x4;
 
   class Qtn {
     public:
@@ -21,7 +24,7 @@ namespace geni::math {
       static
       Qtn real( Scalar s ) { return { 0.0f, 0.0f, 0.0f, s }; }
       static
-      Qtn orientation( Vec3 axis, Angle const a )
+      Qtn rotation( Vec3 axis, Angle const a )
       {
         auto halfA{ a.toRadians() * 0.5 };
         axis = norm(axis);
@@ -41,11 +44,12 @@ namespace geni::math {
       Qtn operator /( Scalar s ) const;
       Qtn operator *( Qtn const& q ) const;
       Qtn operator /( Qtn const& q ) const;
-      Qtn& normalize();
-
+      
       auto toString() const -> std::string;
       
     private:
+      friend Qtn norm( Qtn const& q );
+      friend void Envoy::construct( Mat4x4& m, Qtn const& q );
 
       class I;
       class J;
@@ -175,18 +179,14 @@ namespace geni::math {
   { return *this * ~q; }
 
   inline
-  Qtn& Qtn::normalize()
+  Qtn norm( Qtn const& q )
   {
-    Scalar mag{ sqrt((*this * ~*this).a1) };
+    Scalar mag{ sqrt((q * ~q).a1) };
     if( mag == 0.0f ) {
-      return *this;
+      return q;
     }
     Scalar invmag{ 1.0f / mag };
-    bI.b = bI.b * invmag;
-    cJ.c = cJ.c * invmag;
-    dK.d = dK.d * invmag;
-    a1.a = a1.a * invmag;
-    return *this;
+    return {q.bI * invmag, q.cJ * invmag, q.dK * invmag, q.a1 * invmag};
   }
 
   inline

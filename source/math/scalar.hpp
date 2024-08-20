@@ -31,4 +31,8 @@ namespace geni::math {
     DblScalar cos( DblScalar const a )
     { return std::cos(a); }
 
+    inline
+    Scalar mag( Scalar a )
+    {return std::abs(a); }
+
 }

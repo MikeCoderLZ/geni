@@ -58,3 +58,14 @@ TEST( MathTests, V4xM44 )
   CHECK_EQUAL( ve, vc );
 }
 
+TEST( MathTests, Mat44QtnRot)
+{
+  Qtn q {Qtn::rotation( {1.0f,0.0f,0.0f}, Angle::inTurns(0.25f) )};
+  Mat4x4 m{Mat4x4::rotation(q) };
+  Mat4x4 xm{ 1.0f,0.0f,0.0f,0.0f,
+             0.0f,0.0f,1.0f,0.0f,
+             0.0f,-1.0f,0.0f,0.0f,
+             0.0f,0.0f,0.0f,1.0f };
+
+  CHECK_EQUAL(xm, m);
+}

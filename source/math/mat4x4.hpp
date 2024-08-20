@@ -1,10 +1,15 @@
 #pragma once
 
-#include <cstdlib>
+#include <cstring>
+#include <utility>
 #include "math/scalar.hpp"
+#include "math/fuzzy.hpp"
 #include "math/vec4.hpp"
+#include "math/envoy.hpp"
 
 namespace geni::math {
+
+  class Qtn;
 
   class Mat4x4 {
     public:
@@ -64,21 +69,30 @@ namespace geni::math {
                  *ap++,*bp++,*cp++,*dp++,
                  *ap,  *bp,  *cp,  *dp };
       }
+      static
+      Mat4x4 rotation( Qtn const& q )
+      {
+        Mat4x4 m;
+        Envoy::construct(m,q);
+        return std::move(m);
+      }
 
       bool operator ==( Mat4x4 const& b )
       {
-        return m.e<0,0>() == b.m.e<0,0>() and m.e<0,1>() == b.m.e<0,1>() and m.e<0,2>() == b.m.e<0,2>() and m.e<0,3>() == b.m.e<0,3>() and
-               m.e<1,0>() == b.m.e<1,0>() and m.e<1,1>() == b.m.e<1,1>() and m.e<1,2>() == b.m.e<1,2>() and m.e<1,3>() == b.m.e<1,3>() and
-               m.e<2,0>() == b.m.e<2,0>() and m.e<2,1>() == b.m.e<2,1>() and m.e<2,2>() == b.m.e<2,2>() and m.e<2,3>() == b.m.e<2,3>() and
-               m.e<3,0>() == b.m.e<3,0>() and m.e<3,1>() == b.m.e<3,1>() and m.e<3,2>() == b.m.e<3,2>() and m.e<3,3>() == b.m.e<3,3>(); 
+        using namespace fuzzy;
+        return eq(m.e<0,0>(),b.m.e<0,0>()) and eq(m.e<0,1>(),b.m.e<0,1>()) and eq(m.e<0,2>(),b.m.e<0,2>()) and eq(m.e<0,3>(),b.m.e<0,3>()) and
+               eq(m.e<1,0>(),b.m.e<1,0>()) and eq(m.e<1,1>(),b.m.e<1,1>()) and eq(m.e<1,2>(),b.m.e<1,2>()) and eq(m.e<1,3>(),b.m.e<1,3>()) and
+               eq(m.e<2,0>(),b.m.e<2,0>()) and eq(m.e<2,1>(),b.m.e<2,1>()) and eq(m.e<2,2>(),b.m.e<2,2>()) and eq(m.e<2,3>(),b.m.e<2,3>()) and
+               eq(m.e<3,0>(),b.m.e<3,0>()) and eq(m.e<3,1>(),b.m.e<3,1>()) and eq(m.e<3,2>(),b.m.e<3,2>()) and eq(m.e<3,3>(),b.m.e<3,3>()); 
       }
 
       bool operator !=( Mat4x4 const& b )
       {
-        return m.e<0,0>() != b.m.e<0,0>() or m.e<0,1>() != b.m.e<0,1>() or m.e<0,2>() != b.m.e<0,2>() or m.e<0,3>() != b.m.e<0,3>() or
-               m.e<1,0>() != b.m.e<1,0>() or m.e<1,1>() != b.m.e<1,1>() or m.e<1,2>() != b.m.e<1,2>() or m.e<1,3>() != b.m.e<1,3>() or
-               m.e<2,0>() != b.m.e<2,0>() or m.e<2,1>() != b.m.e<2,1>() or m.e<2,2>() != b.m.e<2,2>() or m.e<2,3>() != b.m.e<2,3>() or
-               m.e<3,0>() != b.m.e<3,0>() or m.e<3,1>() != b.m.e<3,1>() or m.e<3,2>() != b.m.e<3,2>() or m.e<3,3>() != b.m.e<3,3>(); 
+        using namespace fuzzy;
+        return neq(m.e<0,0>(),b.m.e<0,0>()) or neq(m.e<0,1>(),b.m.e<0,1>()) or neq(m.e<0,2>(),b.m.e<0,2>()) or neq(m.e<0,3>(),b.m.e<0,3>()) or
+               neq(m.e<1,0>(),b.m.e<1,0>()) or neq(m.e<1,1>(),b.m.e<1,1>()) or neq(m.e<1,2>(),b.m.e<1,2>()) or neq(m.e<1,3>(),b.m.e<1,3>()) or
+               neq(m.e<2,0>(),b.m.e<2,0>()) or neq(m.e<2,1>(),b.m.e<2,1>()) or neq(m.e<2,2>(),b.m.e<2,2>()) or neq(m.e<2,3>(),b.m.e<2,3>()) or
+               neq(m.e<3,0>(),b.m.e<3,0>()) or neq(m.e<3,1>(),b.m.e<3,1>()) or neq(m.e<3,2>(),b.m.e<3,2>()) or neq(m.e<3,3>(),b.m.e<3,3>()); 
       }
 
       Scalar operator ()( std::size_t c, std::size_t r ) const { return m(c,r); }
@@ -110,7 +124,9 @@ namespace geni::math {
         public:
 
           M() : m{0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f} {}
-          M( M const& N ) { std::memcpy(m, N.m, 16); }
+          M( M const& N )
+            : m{0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f}
+          { std::memcpy(m, N.m, sizeof(Scalar) * 16); }
           M(Scalar a) : m{a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a} {}
           M( Scalar a00, Scalar a01, Scalar a02, Scalar a03,
              Scalar a10, Scalar a11, Scalar a12, Scalar a13,
@@ -119,6 +135,7 @@ namespace geni::math {
              : m{a00,a01,a02,a03,a10,a11,a12,a13,a20,a21,a22,a23,a30,a31,a32,a33}
           {}
           M(Scalar const* a, Scalar const* b, Scalar const* c, Scalar const* d)
+            : m{0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f}
           {
             Scalar* i{m};
             std::memcpy( i, a, sizeof(Scalar) * 4);
@@ -130,7 +147,6 @@ namespace geni::math {
             std::memcpy( i, d, sizeof(Scalar) * 4);
             i += 4;
           }
-
           Scalar operator ()( std::size_t c, std::size_t r) const { return m[c*4u+r]; }
           Scalar& operator ()( std::size_t c, std::size_t r) { return m[c*4u+r]; }
           template< int c, int r >
