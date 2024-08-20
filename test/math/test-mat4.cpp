@@ -2,7 +2,7 @@
 
 #include "CppUTest/TestHarness.h"
 
-#include "math/mat4x4.hpp"
+#include "math/mat4.hpp"
 #include "math/stringify.hpp"
 
 using namespace geni::math;

@@ -39,7 +39,7 @@ add_executable(
     test/math/test-vec2.cpp
     test/math/test-vec3.cpp
     test/math/test-vec4.cpp
-    test/math/test-mat4x4.cpp
+    test/math/test-mat4.cpp
     test/math/test-qtn.cpp
     test/math/test-math.cpp
 )

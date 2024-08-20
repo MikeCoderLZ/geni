@@ -1,6 +1,6 @@
 #include "math/envoy.hpp"
 #include "math/qtn.hpp"
-#include "math/mat4x4.hpp"
+#include "math/mat4.hpp"
 
 namespace geni::math {
 

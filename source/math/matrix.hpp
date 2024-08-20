@@ -1,3 +1,3 @@
 #pragma once
 
-#include "math/mat4x4.hpp"
+#include "math/mat4.hpp"
