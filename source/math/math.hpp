@@ -33,7 +33,7 @@ namespace geni::math {
     }
 
     inline
-    auto operator <<( std::ostream& s, Mat4x4 const& m ) -> std::ostream& {
+    auto operator <<( std::ostream& s, Mat4 const& m ) -> std::ostream& {
         s << "[<" << m(0,0) << ", " << m(0,1) << ", " << m(0,2) << ", " << m(0,3) << ">, <";
         s << m(1,0) << ", " << m(1,1) << ", " << m(1,2) << ", " << m(1,3) << ">, <";
         s << m(2,0) << ", " << m(2,1) << ", " << m(2,2) << ", " << m(2,3) << ">, <";

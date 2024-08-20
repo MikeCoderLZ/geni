@@ -9,7 +9,7 @@
 
 namespace geni::math {
 
-  class Mat4x4;
+  class Mat4;
 
   class Qtn {
     public:
@@ -49,7 +49,7 @@ namespace geni::math {
       
     private:
       friend Qtn norm( Qtn const& q );
-      friend void Envoy::construct( Mat4x4& m, Qtn const& q );
+      friend void Envoy::construct( Mat4& m, Qtn const& q );
 
       class I;
       class J;

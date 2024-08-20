@@ -4,7 +4,7 @@
 
 namespace geni::math {
 
-  void Envoy::construct( Mat4x4& m, Qtn const& q )
+  void Envoy::construct( Mat4& m, Qtn const& q )
   {
     DblScalar bb{ (q.bI*q.bI).a * 2.0 };
     DblScalar bc{ (q.bI*q.cJ).d * 2.0 };

@@ -54,7 +54,7 @@ SimpleString StringFrom( geni::math::Qtn const& v )
 }
 
 inline
-SimpleString StringFrom( geni::math::Mat4x4 const& m )
+SimpleString StringFrom( geni::math::Mat4 const& m )
 {
     return SimpleString("[<")
             + StringFrom( m(0,0) )

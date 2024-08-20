@@ -7,34 +7,34 @@
 
 using namespace geni::math;
 
-TEST_GROUP( Mat4x4Tests ) {
-    Mat4x4 m0;
-    Mat4x4 mI;
-    Mat4x4 m3;
-    Mat4x4 m4;
-    Mat4x4 m5;
-    Mat4x4 m6;
+TEST_GROUP( Mat4Tests ) {
+    Mat4 m0;
+    Mat4 mI;
+    Mat4 m3;
+    Mat4 m4;
+    Mat4 m5;
+    Mat4 m6;
 
     void setup()
     {
-        m0 = Mat4x4();
-        mI = Mat4x4::identity();
-        m3 = Mat4x4::fill(4.0f);
-        m4 = Mat4x4::columns( Vec4(1.0f,2.0f,3.0f,4.0f) );
+        m0 = Mat4();
+        mI = Mat4::identity();
+        m3 = Mat4::fill(4.0f);
+        m4 = Mat4::columns( Vec4(1.0f,2.0f,3.0f,4.0f) );
 
-        m5 = Mat4x4::columns( Vec4(1.0f,2.0f,3.0f,4.0f),
+        m5 = Mat4::columns( Vec4(1.0f,2.0f,3.0f,4.0f),
                               Vec4(-1.0f,-2.0f,-3.0f,-4.0f),
                               Vec4(5.0f,6.0f,7.0f,8.0f),
                               Vec4(-5.0f,-6.0f,-7.0f,-8.0f) );
 
-        m6 = Mat4x4::columns( Vec4(2.0f,7.0f,-8.0f,10.0f),
+        m6 = Mat4::columns( Vec4(2.0f,7.0f,-8.0f,10.0f),
                               Vec4(5.0f,3.0f,9.0f,6.0f),
                               Vec4(-7.0f,-4.0f,-2.0f,-9.0f),
                               Vec4(-1.0f,0.0f,1.0f,-6.0f) );
     }
 };
 
-TEST( Mat4x4Tests, DefaultConstruction )
+TEST( Mat4Tests, DefaultConstruction )
 {
     CHECK_EQUAL( 0.0f, m0(0,0) );
     CHECK_EQUAL( 0.0f, m0(0,1) );
@@ -57,7 +57,7 @@ TEST( Mat4x4Tests, DefaultConstruction )
     CHECK_EQUAL( 0.0f, m0(3,3) );
 }
 
-TEST( Mat4x4Tests, mIdentityConstruction )
+TEST( Mat4Tests, mIdentityConstruction )
 {
     CHECK_EQUAL( 1.0f, mI(0,0) );
     CHECK_EQUAL( 0.0f, mI(0,1) );
@@ -80,7 +80,7 @@ TEST( Mat4x4Tests, mIdentityConstruction )
     CHECK_EQUAL( 1.0f, mI(3,3) );
 }
 
-TEST( Mat4x4Tests, FillConstruction )
+TEST( Mat4Tests, FillConstruction )
 {
     CHECK_EQUAL( 4.0f, m3(0,0) );
     CHECK_EQUAL( 4.0f, m3(0,1) );
@@ -103,7 +103,7 @@ TEST( Mat4x4Tests, FillConstruction )
     CHECK_EQUAL( 4.0f, m3(3,3) );
 }
 
-TEST( Mat4x4Tests, ColumnConstruction )
+TEST( Mat4Tests, ColumnConstruction )
 {
     CHECK_EQUAL( 1.0f, m4(0,0) );
     CHECK_EQUAL( 2.0f, m4(0,1) );
@@ -126,7 +126,7 @@ TEST( Mat4x4Tests, ColumnConstruction )
     CHECK_EQUAL( 4.0f, m4(3,3) );
 }
 
-TEST( Mat4x4Tests, MultiColumnConstruction )
+TEST( Mat4Tests, MultiColumnConstruction )
 {
     CHECK_EQUAL( 1.0f, m5(0,0) );
     CHECK_EQUAL( 2.0f, m5(0,1) );
@@ -149,99 +149,99 @@ TEST( Mat4x4Tests, MultiColumnConstruction )
     CHECK_EQUAL( -8.0f, m5(3,3) );
 }
 
-TEST( Mat4x4Tests, MatrixAddition_ZeroMatrix )
+TEST( Mat4Tests, MatrixAddition_ZeroMatrix )
 {
     // This happens to be commutative
-    Mat4x4 c{ m5+m0 };
+    Mat4 c{ m5+m0 };
     CHECK_EQUAL(m5, c);
     c = m0+m5;
     CHECK_EQUAL(m5, c);
 }
 
-TEST( Mat4x4Tests, MatrixAddition )
+TEST( Mat4Tests, MatrixAddition )
 {
     // This happens to be commutative
-    Mat4x4 c{ m5+m6 };
-    Mat4x4 e{ 3.0f,9.0f,-5.0f,14.0f, 4.0f,1.0f,6.0f,2.0f, -2.0f,2.0f,5.0f,-1.0f, -6.0f,-6.0f,-6.0f,-14.0f };
+    Mat4 c{ m5+m6 };
+    Mat4 e{ 3.0f,9.0f,-5.0f,14.0f, 4.0f,1.0f,6.0f,2.0f, -2.0f,2.0f,5.0f,-1.0f, -6.0f,-6.0f,-6.0f,-14.0f };
     CHECK_EQUAL(e, c);
     c = m6+m5;
     CHECK_EQUAL(e, c);
 }
 
-TEST( Mat4x4Tests, MatrixNegation )
+TEST( Mat4Tests, MatrixNegation )
 {
-    Mat4x4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
-    Mat4x4 c{ -m };
-    CHECK_EQUAL(Mat4x4( 1,5,-11,6, 6,5,12,10, -12,-10,-9,-17, 4,6,8,2 ), c);
+    Mat4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
+    Mat4 c{ -m };
+    CHECK_EQUAL(Mat4( 1,5,-11,6, 6,5,12,10, -12,-10,-9,-17, 4,6,8,2 ), c);
 }
 
-TEST( Mat4x4Tests, MatrixSubtraction )
+TEST( Mat4Tests, MatrixSubtraction )
 {
-    Mat4x4 c{ m5-m6 };
-    Mat4x4 e{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
+    Mat4 c{ m5-m6 };
+    Mat4 e{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
     CHECK_EQUAL(e, c);
     c = m6-m5;
     CHECK_EQUAL(-e, c);
 }
 
-TEST( Mat4x4Tests, Mat4x4xScalar )
+TEST( Mat4Tests, Mat4xScalar )
 {
-    Mat4x4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
-    Mat4x4 c{ m * -1 };
-    CHECK_EQUAL(Mat4x4( 1,5,-11,6, 6,5,12,10, -12,-10,-9,-17, 4,6,8,2 ), c);
+    Mat4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
+    Mat4 c{ m * -1 };
+    CHECK_EQUAL(Mat4( 1,5,-11,6, 6,5,12,10, -12,-10,-9,-17, 4,6,8,2 ), c);
 }
 
-TEST( Mat4x4Tests, ScalarxMat4x4 )
+TEST( Mat4Tests, ScalarxMat4 )
 {
-    Mat4x4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
-    Mat4x4 c{ -1* m };
-    CHECK_EQUAL(Mat4x4( 1,5,-11,6, 6,5,12,10, -12,-10,-9,-17, 4,6,8,2 ), c);
+    Mat4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
+    Mat4 c{ -1* m };
+    CHECK_EQUAL(Mat4( 1,5,-11,6, 6,5,12,10, -12,-10,-9,-17, 4,6,8,2 ), c);
 }
 
-TEST( Mat4x4Tests, Mat4x4DivScalar )
+TEST( Mat4Tests, Mat4DivScalar )
 {
-    Mat4x4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
-    Mat4x4 c{ m / -1 };
-    CHECK_EQUAL(Mat4x4( 1,5,-11,6, 6,5,12,10, -12,-10,-9,-17, 4,6,8,2 ), c);
+    Mat4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
+    Mat4 c{ m / -1 };
+    CHECK_EQUAL(Mat4( 1,5,-11,6, 6,5,12,10, -12,-10,-9,-17, 4,6,8,2 ), c);
 }
 
-TEST( Mat4x4Tests, MatrixMultiplication_ZeroMatrix )
+TEST( Mat4Tests, MatrixMultiplication_ZeroMatrix )
 {
     // This happens to be commutative
-    Mat4x4 c{ m5*m0 };
+    Mat4 c{ m5*m0 };
     CHECK_EQUAL(m0, c);
     c = m0*m5;
     CHECK_EQUAL(m0, c);
 }
 
-TEST( Mat4x4Tests, MatrixMultiplication_mIdentityMatrix )
+TEST( Mat4Tests, MatrixMultiplication_mIdentityMatrix )
 {
     // This happens to be commutative
-    Mat4x4 c{ m5*mI };
+    Mat4 c{ m5*mI };
     CHECK_EQUAL(m5, c);
     c = mI*m5;
     CHECK_EQUAL(m5, c);
 }
-TEST( Mat4x4Tests, MatrixMultiplication_NontrivialMatrices )
+TEST( Mat4Tests, MatrixMultiplication_NontrivialMatrices )
 {
-    Mat4x4 p{ -95.0f, -118.0f, -141.0f, -164.0f,
+    Mat4 p{ -95.0f, -118.0f, -141.0f, -164.0f,
               17.0f, 22.0f, 27.0f, 32.0f,
               32.0f, 36.0f, 40.0f, 44.0f,
               34.0f, 40.0f, 46.0f, 52.0f };
-    Mat4x4 c{ m5*m6 };
+    Mat4 c{ m5*m6 };
     CHECK_EQUAL(p, c);
 }
 
-TEST( Mat4x4Tests, Mat4x4Transpose )
+TEST( Mat4Tests, Mat4Transpose )
 {
-    Mat4x4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
-    Mat4x4 c{ m.transpose() };
-    CHECK_EQUAL(Mat4x4( -1,-6,12,-4, -5,-5,10,-6, 11,-12,9,-8, -6,-10,17,-2 ), c);
+    Mat4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
+    Mat4 c{ m.transpose() };
+    CHECK_EQUAL(Mat4( -1,-6,12,-4, -5,-5,10,-6, 11,-12,9,-8, -6,-10,17,-2 ), c);
 }
 
-TEST( Mat4x4Tests, Mat4x4Trace )
+TEST( Mat4Tests, Mat4Trace )
 {
-    Mat4x4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
+    Mat4 m{ -1,-5,11,-6, -6,-5,-12,-10, 12,10,9,17, -4,-6,-8,-2 };
     Scalar c{ m.trace() };
     CHECK_EQUAL(1, c);
 }

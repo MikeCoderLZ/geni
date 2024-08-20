@@ -2,12 +2,12 @@
 
 namespace geni::math {
 
-  class Mat4x4;
+  class Mat4;
   class Qtn;
 
   class Envoy {
     public:
       static
-      void construct( Mat4x4& m, Qtn const& q );
+      void construct( Mat4& m, Qtn const& q );
   };
 }
